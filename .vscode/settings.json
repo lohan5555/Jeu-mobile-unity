@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "INFO701.sln"
+    "dotnet.defaultSolution": "Jeu-mobile-unity.sln"
 }
