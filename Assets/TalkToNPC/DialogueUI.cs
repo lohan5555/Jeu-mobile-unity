@@ -1,51 +1,78 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 public class DialogueUI : MonoBehaviour
 {
     public static DialogueUI Instance;
 
-    public UIDocument uiDocument; // assigne ton UIDocument dans l'inspector
+    public UIDocument uiDocument;
 
-    private Label dialogueLabel;
+    private VisualElement dialogueBox;
     private DialogueLine[] currentDialogue;
     private int currentIndex;
 
     void Awake()
     {
+        // Singleton
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        else { Destroy(gameObject); return; }
 
-        if (uiDocument != null)
-        {
-            var root = uiDocument.rootVisualElement;
-            dialogueLabel = root.Q<Label>("DialogueLabel"); // Name du Label dans UI Builder
-            if (dialogueLabel == null)
-            {
-                Debug.LogError("[DialogueUI] impossible de trouver 'DialogueLabel' dans l'UIDocument !");
-            }
-            else
-            {
-                Debug.Log("[DialogueUI] Label trouvé avec succès !");
-            }
-        }
-        else
+        if (uiDocument == null)
         {
             Debug.LogError("[DialogueUI] UIDocument non assigné !");
+            return;
+        }
+
+        var root = uiDocument.rootVisualElement;
+        dialogueBox = root.Q<VisualElement>("DialogueBox");
+
+        if (dialogueBox == null)
+        {
+            Debug.LogError("[DialogueUI] DialogueBox introuvable !");
+            return;
+        }
+
+        // Cache la boîte au départ
+        dialogueBox.style.display = DisplayStyle.None;
+    }
+
+    void Update()
+    {
+        if (currentDialogue == null) return;
+
+        bool tapped = false;
+
+#if ENABLE_INPUT_SYSTEM
+        // Nouveau Input System
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+            tapped = true;
+
+        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+            tapped = true;
+#else
+        // Ancien Input
+        if (Input.GetMouseButtonDown(0) ||
+            (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+            tapped = true;
+#endif
+
+        if (tapped)
+        {
+            NextLine();
         }
     }
 
     public void StartDialogue(DialogueLine[] lines)
     {
-        if (lines == null || lines.Length == 0)
-        {
-            Debug.LogWarning("[DialogueUI] Aucun dialogue à afficher !");
-            return;
-        }
+        if (lines == null || lines.Length == 0) return;
 
         currentDialogue = lines;
         currentIndex = 0;
-        Debug.Log($"[DialogueUI] Dialogue lancé avec {lines.Length} lignes");
+
+        dialogueBox.style.display = DisplayStyle.Flex;
         ShowCurrentLine();
     }
 
@@ -53,37 +80,31 @@ public class DialogueUI : MonoBehaviour
     {
         if (currentDialogue != null && currentIndex < currentDialogue.Length)
         {
-            if (dialogueLabel != null)
-            {
-                dialogueLabel.text = currentDialogue[currentIndex].text;
-                Debug.Log($"[DialogueUI] Ligne {currentDialogue[currentIndex].id} : {currentDialogue[currentIndex].text}");
-            }
+            // Debug log pour vérifier le texte
+            Debug.Log($"[DialogueUI] Ligne {currentIndex} : '{currentDialogue[currentIndex].text}'");
         }
         else
         {
-            Debug.LogWarning("[DialogueUI] Pas de ligne à afficher ou index hors limite");
+            EndDialogue();
         }
     }
 
     public void NextLine()
     {
-        if (currentDialogue == null)
-        {
-            Debug.Log("[DialogueUI] Pas de dialogue en cours");
-            return;
-        }
+        if (currentDialogue == null) return;
 
         currentIndex++;
+
         if (currentIndex < currentDialogue.Length)
-        {
             ShowCurrentLine();
-        }
         else
-        {
-            if (dialogueLabel != null)
-                dialogueLabel.text = ""; // fin du dialogue
-            Debug.Log("[DialogueUI] Dialogue terminé !");
-            currentDialogue = null;
-        }
+            EndDialogue();
+    }
+
+    private void EndDialogue()
+    {
+        currentDialogue = null;
+        dialogueBox.style.display = DisplayStyle.None;
+        Debug.Log("[DialogueUI] Dialogue terminé et boîte cachée");
     }
 }
