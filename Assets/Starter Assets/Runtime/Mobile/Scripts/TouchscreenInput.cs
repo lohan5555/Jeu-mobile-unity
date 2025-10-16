@@ -20,7 +20,8 @@ public class TouchscreenInput : MonoBehaviour
     public UnityEvent<Vector2> LookEvent;
     public UnityEvent<bool> JumpEvent;
     public UnityEvent<bool> SprintEvent;
-    
+    public UnityEvent<bool> AttackEvent;
+
     private UIDocument m_Document;
 
     private VirtualJoystick m_MoveJoystick;
@@ -68,6 +69,9 @@ public class TouchscreenInput : MonoBehaviour
         var sprintButton = m_Document.rootVisualElement.Q<VisualElement>("ButtonSprint");
         sprintButton.RegisterCallback<PointerEnterEvent>(evt => { SprintEvent.Invoke(true); });
         sprintButton.RegisterCallback<PointerLeaveEvent>(evt => { SprintEvent.Invoke(false); });
+
+        var attackButton = m_Document.rootVisualElement.Q<VisualElement>("ButtonAttack");
+        attackButton.RegisterCallback<PointerDownEvent>(evt => { AttackEvent.Invoke(true); });
     }
 }
 public class VirtualJoystick
