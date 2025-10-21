@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Polytope Studio/Lowpoly_Demos/Environment_Free/level_One.unity
-    guid: c732593fe76e5a84197f9cd13963f706
+  - enabled: 1
+    path: Assets/Scenes/menuPrincipal.unity
+    guid: 0dbe7bacec5db0a4b90c7517c01f8d28
   - enabled: 1
     path: Assets/Scenes/level_One.unity
     guid: b39f335c4682c4f43ba0229087e1c2db
