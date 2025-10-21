@@ -1,0 +1,20 @@
+{
+  "npc_1": [
+    {
+      "id": 1,
+      "text": "Te voilà enfin, tu es prêt pour ta dernière épreuve."
+    },
+    {
+      "id": 2,
+      "text": "Tu sais maitenant les dangers de ce monde, et comment leurs faire face."
+    },
+    {
+      "id": 3,
+      "text": "Mais maitenant, il est temps quand tu me le prouves."
+    },
+    {
+      "id": 4,
+      "text": "Bats-toi contre moi !"
+    }
+  ]
+}

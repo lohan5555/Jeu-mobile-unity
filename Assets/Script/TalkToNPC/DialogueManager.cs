@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;  // Singleton
@@ -16,7 +16,27 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-        TextAsset jsonText = Resources.Load<TextAsset>("dialogues"); // fichier dans Assets/Resources/dialogues.json
+
+        // Récupérer la scène active
+        Scene currentScene = SceneManager.GetActiveScene();
+        // Déterminer le chemin du fichier JSON selon la scène
+        string jsonPath = "";
+
+        switch (currentScene.name)
+        {
+            case "level_One":
+                jsonPath = "dialogue_1/dialogues_1";
+                break;
+            case "level_Three":
+                jsonPath = "dialogue_3/dialogues_1";
+                break;
+            default:
+                Debug.LogError("[DialogueManager] Pas de dialogues JSON défini pour cette scène !");
+                return;
+        }
+
+        // Charger le JSON depuis Resources
+        TextAsset jsonText = Resources.Load<TextAsset>(jsonPath);
         if (jsonText != null)
         {
             dialogues = JsonUtility.FromJson<DialogueData>(jsonText.text);
