@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
     public float knockbackDistance = 2f;
     public float knockbackSpeed = 5f;
     private bool alive = true;
+    public GameObject loot;
+     public float despawnTime = 3f;
 
     void Start()
     {
@@ -162,11 +164,23 @@ public class Enemy : MonoBehaviour
         isAttacking = false;
     }
 
-    void Die()
+    public void Die()
     {
         alive = false;
         hit = 0;
         animator.SetTrigger("Die");
-        Destroy(gameObject, 3f);
+        StartCoroutine(WaitDespawn());
+    }
+
+    private IEnumerator WaitDespawn()
+    {
+        yield return new WaitForSeconds(despawnTime);
+        Destroy(gameObject);
+        if (loot != null)
+        {
+            loot.SetActive(true);
+            //on fait apparaitre le loot légèrement au dessus de la position de l'Enemy
+            Instantiate(loot, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+        }
     }
 }
