@@ -26,7 +26,8 @@ public class Enemy : MonoBehaviour
     public float knockbackSpeed = 5f;
     private bool alive = true;
     public GameObject loot;
-     public float despawnTime = 3f;
+    public GameObject smokeEffect;
+    public float despawnTime = 3f;
 
     void Start()
     {
@@ -176,9 +177,12 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(despawnTime);
         Destroy(gameObject);
+        if (smokeEffect != null)
+        {
+            Instantiate(smokeEffect, transform.position, Quaternion.identity);
+        }
         if (loot != null)
         {
-            loot.SetActive(true);
             //on fait apparaitre le loot légèrement au dessus de la position de l'Enemy
             Instantiate(loot, transform.position + Vector3.up * 0.5f, Quaternion.identity);
         }
