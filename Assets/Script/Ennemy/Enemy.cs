@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     private Vector3 velocity;
     public float knockbackDistance = 2f;
     public float knockbackSpeed = 5f;
+    private bool alive = true;
 
     void Start()
     {
@@ -56,7 +57,7 @@ public class Enemy : MonoBehaviour
         Vector3 move = Vector3.zero;
         
         Vector3 direction = player.position - transform.position;
-        if (direction != Vector3.zero && distance < detectionDistance)
+        if (direction != Vector3.zero && distance < detectionDistance && alive)
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 Quaternion.LookRotation(direction),
@@ -88,9 +89,12 @@ public class Enemy : MonoBehaviour
             AttackPlayer(hit, "Attack2");
         }
 
-        // Application du mouvement horizontal (X et Z)
-        Vector3 horizontalMove = new Vector3(move.x, 0, move.z);
-        controller.Move(horizontalMove * Time.deltaTime);
+        if (alive)
+        {
+            // Application du mouvement horizontal (X et Z)
+            Vector3 horizontalMove = new Vector3(move.x, 0, move.z);
+            controller.Move(horizontalMove * Time.deltaTime);   
+        }
 
         // Application du mouvement vertical (Y)
         controller.Move(new Vector3(0, velocity.y, 0) * Time.deltaTime);
@@ -160,6 +164,8 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
+        alive = false;
+        hit = 0;
         animator.SetTrigger("Die");
         Destroy(gameObject, 3f);
     }
