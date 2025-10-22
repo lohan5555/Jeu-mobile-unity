@@ -14,37 +14,60 @@ public class DialogueManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    void Start()
+    public void LoadDialogueForCurrentScene()
     {
-
-        // Récupérer la scène active
         Scene currentScene = SceneManager.GetActiveScene();
-        // Déterminer le chemin du fichier JSON selon la scène
         string jsonPath = "";
 
         switch (currentScene.name)
         {
             case "level_One":
-                jsonPath = "dialogue_1/dialogues_1";
+                PlayerInventory playerInv = FindAnyObjectByType<PlayerInventory>();
+
+                if (playerInv != null)
+                {
+                    string invContent = playerInv.items.Count > 0
+                        ? string.Join(", ", playerInv.items)
+                        : "Inventaire vide";
+
+                    Debug.Log($"[DialogueManager] Inventaire du joueur : {invContent}");
+
+                    if (playerInv.items.Contains(0))
+                    {
+                        Debug.Log("[DialogueManager] Joueur possède l'objet 0 -> dialogue alternatif !");
+                        jsonPath = "dialogue_1/dialogues_2";
+                    }
+                    else
+                    {
+                        jsonPath = "dialogue_1/dialogues_1";
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("[DialogueManager] Aucun PlayerInventory trouvé dans la scène !");
+                    jsonPath = "dialogue_1/dialogues_1";
+                }
                 break;
+
             case "level_Three":
                 jsonPath = "dialogue_3/dialogues_1";
                 break;
+
             default:
                 Debug.LogError("[DialogueManager] Pas de dialogues JSON défini pour cette scène !");
                 return;
         }
 
-        // Charger le JSON depuis Resources
         TextAsset jsonText = Resources.Load<TextAsset>(jsonPath);
+
         if (jsonText != null)
         {
             dialogues = JsonUtility.FromJson<DialogueData>(jsonText.text);
-            Debug.Log("[DialogueManager] JSON chargé avec succès !");
+            Debug.Log($"[DialogueManager] JSON chargé avec succès depuis : {jsonPath}");
         }
         else
         {
-            Debug.LogError("[DialogueManager] Impossible de charger dialogues.json depuis Resources !");
+            Debug.LogError($"[DialogueManager] Impossible de charger le JSON depuis Resources : {jsonPath}");
         }
     }
 }

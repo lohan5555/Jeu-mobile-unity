@@ -1,0 +1,16 @@
+{
+  "npc_1": [
+    {
+      "id": 1,
+      "text": "Très bon début, tu as du potentiel !"
+    },
+    {
+      "id": 2,
+      "text": "Il est temps pour toi d'affronter une nouvelle menace."
+    },
+    {
+      "id": 3,
+      "text": "Va sur le stèle derrière moi et rejoins moi dans le désert de sable chaud."
+    }
+  ]
+}

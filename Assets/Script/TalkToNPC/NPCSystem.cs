@@ -122,16 +122,23 @@ public class NPCSystem : MonoBehaviour
     private void OnTalkButtonPressed()
     {
         if (!playerInRange) return;
+
         Debug.Log("[NPCSystem] Dialogue started !");
+
         if (DialogueManager.Instance == null)
         {
             Debug.LogError("DialogueManager.Instance est null !");
             return;
         }
 
+        // Charge le bon dialogue selon la scène + inventaire
+        DialogueManager.Instance.LoadDialogueForCurrentScene();
+
+        // Puis lance le dialogue
         var npcLines = DialogueManager.Instance.dialogues.npc_1;
         DialogueUI.Instance.StartDialogue(npcLines);
     }
+
 
     public void OnTouch(InputAction.CallbackContext context)
     {
