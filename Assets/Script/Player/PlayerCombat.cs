@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerCombat : MonoBehaviour
 {
-    public int health = 20;
+    public int health = 100;
     public WeaponHitbox weaponHitbox;
     private bool isInvulnerable = false;
     public float invulnerabilityTime = 1.5f;
@@ -63,6 +63,7 @@ public class PlayerCombat : MonoBehaviour
 
         health -= damage;
         Debug.Log("Enemy took damage, health = " + health);
+        HealthSystem.Instance.TakeDamage(damage);
 
         if (health <= 0)
         {
