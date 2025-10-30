@@ -50,7 +50,30 @@ public class DialogueManager : MonoBehaviour
                 break;
 
             case "level_Two":
-                jsonPath = "dialogue_2/dialogues_1";
+                PlayerInventory Inventaire = FindAnyObjectByType<PlayerInventory>();
+
+                if (Inventaire != null)
+                {
+                    string invContent = Inventaire.items.Count > 0
+                        ? string.Join(", ", Inventaire.items)
+                        : "Inventaire vide";
+
+                    Debug.Log($"[DialogueManager] Inventaire du joueur : {invContent}");
+
+                    if (Inventaire.items.Contains(1))
+                    {
+                        Debug.Log("[DialogueManager] Joueur poss�de l'objet 0 -> dialogue alternatif !");
+                        jsonPath = "dialogue_2/dialogues_2";
+                    }
+                    else
+                    {
+                        jsonPath = "dialogue_2/dialogues_1";
+                    }
+                }
+                else
+                {
+                    jsonPath = "dialogue_2/dialogues_1";
+                }
                 break;
 
             case "level_Three":

@@ -1,0 +1,12 @@
+{
+  "npc_1": [
+    {
+      "id": 1,
+      "text": "Parfait, passons à la suite."
+    },
+    {
+      "id": 2,
+      "text": "Dirige toi vers la stèle"
+    }
+  ]
+}
