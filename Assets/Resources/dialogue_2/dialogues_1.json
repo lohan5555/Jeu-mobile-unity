@@ -1,0 +1,16 @@
+{
+  "npc_1": [
+    {
+      "id": 1,
+      "text": "Bonjour aventurier ! Voici la 2e épreuve de ton voyage."
+    },
+    {
+      "id": 2,
+      "text": "Derrière les rochers de ce canyon se trouve des cactus agressive !"
+    },
+    {
+      "id": 3,
+      "text": "Ramène-moi leurs trésors et nous pourrons passer à la suite."
+    }
+  ]
+}

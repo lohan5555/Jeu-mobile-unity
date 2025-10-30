@@ -34,7 +34,7 @@ public class DialogueManager : MonoBehaviour
 
                     if (playerInv.items.Contains(0))
                     {
-                        Debug.Log("[DialogueManager] Joueur possède l'objet 0 -> dialogue alternatif !");
+                        Debug.Log("[DialogueManager] Joueur possï¿½de l'objet 0 -> dialogue alternatif !");
                         jsonPath = "dialogue_1/dialogues_2";
                     }
                     else
@@ -44,9 +44,13 @@ public class DialogueManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("[DialogueManager] Aucun PlayerInventory trouvé dans la scène !");
+                    Debug.LogWarning("[DialogueManager] Aucun PlayerInventory trouvï¿½ dans la scï¿½ne !");
                     jsonPath = "dialogue_1/dialogues_1";
                 }
+                break;
+
+            case "level_Two":
+                jsonPath = "dialogue_2/dialogues_1";
                 break;
 
             case "level_Three":
@@ -54,7 +58,7 @@ public class DialogueManager : MonoBehaviour
                 break;
 
             default:
-                Debug.LogError("[DialogueManager] Pas de dialogues JSON défini pour cette scène !");
+                Debug.LogError("[DialogueManager] Pas de dialogues JSON dï¿½fini pour cette scï¿½ne !");
                 return;
         }
 
@@ -63,7 +67,7 @@ public class DialogueManager : MonoBehaviour
         if (jsonText != null)
         {
             dialogues = JsonUtility.FromJson<DialogueData>(jsonText.text);
-            Debug.Log($"[DialogueManager] JSON chargé avec succès depuis : {jsonPath}");
+            Debug.Log($"[DialogueManager] JSON chargï¿½ avec succï¿½s depuis : {jsonPath}");
         }
         else
         {
