@@ -4,7 +4,6 @@ using System.Collections;
 public class Enemy : MonoBehaviour
 {
     public int health = 2;
-    public int hit = 1;
     public Animator animator;
     public float invulnerabilityTime = 0.5f;
     public float attackTime = 5f;
@@ -85,11 +84,11 @@ public class Enemy : MonoBehaviour
         }
         else if (!isAttacking && health > 1)
         {
-            AttackPlayer(hit, "Attack1");
+            AttackPlayer("Attack1");
         }
         else if (!isAttacking && health <= 1)
         {
-            AttackPlayer(hit, "Attack2");
+            AttackPlayer("Attack2");
         }
 
         if (alive)
@@ -103,7 +102,7 @@ public class Enemy : MonoBehaviour
         controller.Move(new Vector3(0, velocity.y, 0) * Time.deltaTime);
     }
 
-    public void AttackPlayer(int degat, string attack)
+    public void AttackPlayer(string attack)
     {
         Debug.Log("Animation d'attaque : " + attack);
         StartCoroutine(WaitAttackCooldown());
@@ -168,7 +167,6 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         alive = false;
-        hit = 0;
         animator.SetTrigger("Die");
         StartCoroutine(WaitDespawn());
     }

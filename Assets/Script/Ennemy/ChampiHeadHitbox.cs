@@ -2,7 +2,15 @@ using UnityEngine;
 
 public class ChampiHeadHitbox : MonoBehaviour
 {
-       private void OnTriggerEnter(Collider other)
+    public int damage = 1;
+    private Enemy enemy;
+
+    void Awake()
+    {
+        enemy = FindAnyObjectByType<Enemy>();
+    }
+    
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -10,7 +18,7 @@ public class ChampiHeadHitbox : MonoBehaviour
             PlayerCombat player = other.GetComponent<PlayerCombat>();
             if (player != null)
             {
-                player.TakeDamage(1);
+                player.TakeDamage(damage);
             }
         }
     }
