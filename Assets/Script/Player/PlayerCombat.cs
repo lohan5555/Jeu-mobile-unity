@@ -11,6 +11,24 @@ public class PlayerCombat : MonoBehaviour
     private Animator animator;
     private PlayerInventory PlayerInventory;
 
+    void Start()
+    {
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+            Debug.Log($"[PlayerCombat] Animator retrouvé automatiquement: {animator != null}");
+        }
+        else
+        {
+            Debug.Log($"animator ok: {animator}");
+        }
+    }
+
+    void Update()
+    {
+        Debug.Log($"Animator active : {animator.enabled} | IsPlaying? {animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")}");
+    }
+
     private void Awake()
     {
         animator = GetComponentInParent<Animator>();
@@ -92,13 +110,23 @@ public class PlayerCombat : MonoBehaviour
 
     private IEnumerator RespawnCooldown()
     {
-        yield return new WaitForSeconds(2f);
         animator.SetTrigger("Respawn");
-        //Reaload la scène à la mort, ne marche pas dans la scène 1 car il y a une instance de player déjà présente
-        Scene scene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(scene.buildIndex, LoadSceneMode.Single);
+
+        //on attant la fin de l'animation de mort
+        yield return new WaitForSeconds(0.5f);
         
+        //on replace le joueur
+        var player = FindAnyObjectByType<PlayerCombat>()?.gameObject;
+        SpawnPoint spawn = FindAnyObjectByType<SpawnPoint>();
+        player.transform.position = player.transform.position;
+        transform.rotation = spawn.transform.rotation;
+
+        //on réinitialise ses stats
         health = 100;
         PlayerInventory.clear();
+
+        //on recharge la scène
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
 }

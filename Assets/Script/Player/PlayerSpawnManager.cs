@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
-    //public static string nextSpawnID = "default";
-
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -27,6 +25,7 @@ public class PlayerSpawnManager : MonoBehaviour
             {
                 Debug.Log("Joueur placer");
                 player.transform.position = spawn.transform.position;
+                transform.rotation = spawn.transform.rotation;
             }
             else
             {
