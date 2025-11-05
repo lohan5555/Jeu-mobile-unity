@@ -10,29 +10,32 @@ public class PlayerCombat : MonoBehaviour
     public float invulnerabilityTime = 1.5f;
     private Animator animator;
     private PlayerInventory PlayerInventory;
-
-    void Start()
+    
+    void Awake()
     {
-        if (animator == null)
-        {
-            animator = GetComponentInChildren<Animator>();
-            Debug.Log($"[PlayerCombat] Animator retrouvé automatiquement: {animator != null}");
-        }
-        else
-        {
-            Debug.Log($"animator ok: {animator}");
-        }
-    }
-
-    void Update()
-    {
-        Debug.Log($"Animator active : {animator.enabled} | IsPlaying? {animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")}");
-    }
-
-    private void Awake()
-    {
-        animator = GetComponentInParent<Animator>();
         PlayerInventory = GetComponentInParent<PlayerInventory>();
+        animator = GetComponentInChildren<Animator>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (animator == null) return;
+
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+        animator.Rebind();
+        animator.Update(0f);
+        animator.speed = 1f;
+
+        animator.SetFloat("Speed", 0f);
+
+        animator.Play("Base Layer.Idle Walk Run Blend 0", 0, 0f);
+        animator.Update(0f);
     }
 
     public void EnableHitbox()
