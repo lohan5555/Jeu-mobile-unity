@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string baseUrl = "https://billyboy16.github.io/unity-dialogues/";
 
     // Bouton à afficher si pas de connexion / échec JSON
-    [SerializeField] private GameObject mainMenuButton;
+    [SerializeField] private GameObject RetryButton;
+
+    private bool isDownloading = false;
 
     void Awake()
     {
@@ -44,6 +46,11 @@ public class GameManager : MonoBehaviour
         };
 
         bool success = true;
+
+        if (isDownloading)
+            yield break;
+
+        isDownloading = true;
 
         foreach (string file in dialogueFiles)
         {
@@ -85,10 +92,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[GameManager] Impossible de charger les dialogues. Activation du bouton B_MAINMENU.");
-            if (mainMenuButton != null)
-                mainMenuButton.gameObject.SetActive(true);
+            Debug.LogWarning("[GameManager] Impossible de charger les dialogues. Activation du bouton RetryButton.");
+            if (RetryButton != null)
+                RetryButton.gameObject.SetActive(true);
         }
+
+        isDownloading = false;
     }
 
     public void RegisterPlayer(GameObject p)
@@ -102,4 +111,13 @@ public class GameManager : MonoBehaviour
         //on lie l'UI au gameManager
         mobileUI = ui;
     }
+
+    public void RetryDownload()
+    {
+        if (RetryButton != null)
+            RetryButton.SetActive(false); // cache le bouton
+
+        StartCoroutine(LoadAllDialogues()); // relance le téléchargement
+    }
+
 }
