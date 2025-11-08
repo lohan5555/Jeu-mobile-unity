@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -121,6 +122,21 @@ public class DialogueUI : MonoBehaviour
         dialogueBox.style.display = DisplayStyle.None;
         dialogueLabel.style.display = DisplayStyle.None;
 
-        Debug.Log("[DialogueUI] Dialogue termin� et background + label cach�s");
+        Debug.Log("[DialogueUI] Dialogue termine et background + label caches");
+
+        // Lancer le combat si on est sur la scène leve_Three
+        if (SceneManager.GetActiveScene().name == "level_Three")
+        {
+            FireAttackManager fireManager = FindAnyObjectByType<FireAttackManager>();
+            if (fireManager != null)
+            {
+                fireManager.StartFireCombat();
+                Debug.Log("[DialogueUI] Combat lancé automatiquement !");
+            }
+            else
+            {
+                Debug.LogWarning("[DialogueUI] Aucun FireAttackManager trouvé !");
+            }
+        }
     }
 }
