@@ -2,67 +2,32 @@
   "data": [
     {
       "id": 0,
-      "text": "Les cactus vivent en groupe dans les canyons désertique."
+      "text": "Vous êtes un jeune héros, aller voir le vieux sage pour savoir comment commencer votre parcours."
     },
     {
       "id": 1,
-      "text": "Les cactus savent utiliser leur environnement pour se cacher et prendre leurs victimes par surprise !"
+      "text": "Les champignons vivent dans la forêt."
     },
     {
       "id": 2,
-      "text": "Les champignons vivent dans la forêt."
+      "text": "Méfiez-vous, ils attaquent différemment quand ils sont acculés ! Ne sous-estimez jamais un champignon aux portes de la mort."
     },
     {
       "id": 3,
-      "text": "Méfiez-vous, ils attaquent différemment quand ils sont acculés ! Ne sous-estimez jamais un champignon aux portes de la mort."
+      "text": "Les cactus vivent en groupe dans les canyons désertique."
     },
     {
       "id": 4,
-      "text": "Les cactus vivent en groupe dans les canyons désertique."
+      "text": "Les cactus savent utiliser leur environnement pour se cacher et prendre leurs victimes par surprise !"
     },
     {
       "id": 5,
-      "text": "Les cactus savent utiliser leur environnement pour se cacher et prendre leurs victimes par surprise !"
+      "text": "Ne fait confiance à personne !"
     },
     {
       "id": 6,
-      "text": "Les champignons vivent dans la forêt."
-    },
-    {
-      "id": 7,
-      "text": "Méfiez-vous, ils attaquent différemment quand ils sont acculés ! Ne sous-estimez jamais un champignon aux portes de la mort."
-    },
-    {
-      "id": 8,
-      "text": "Les cactus vivent en groupe dans les canyons désertique."
-    },
-    {
-      "id": 9,
-      "text": "Les cactus savent utiliser leur environnement pour se cacher et prendre leurs victimes par surprise !"
-    },
-    {
-      "id": 10,
-      "text": "Les champignons vivent dans la forêt."
-    },
-    {
-      "id": 11,
-      "text": "Méfiez-vous, ils attaquent différemment quand ils sont acculés ! Ne sous-estimez jamais un champignon aux portes de la mort."
-    },
-    {
-      "id": 12,
-      "text": "Les cactus vivent en groupe dans les canyons désertique."
-    },
-    {
-      "id": 13,
-      "text": "Les cactus savent utiliser leur environnement pour se cacher et prendre leurs victimes par surprise !"
-    },
-    {
-      "id": 14,
-      "text": "Les champignons vivent dans la forêt."
-    },
-    {
-      "id": 15,
-      "text": "Méfiez-vous, ils attaquent différemment quand ils sont acculés ! Ne sous-estimez jamais un champignon aux portes de la mort."
+      "text": "Félicitation, jeune héros, ta quête contre les forces du mal peux enfin commencer"
     }
+    
   ]
 }
