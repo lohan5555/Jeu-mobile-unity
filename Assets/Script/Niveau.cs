@@ -15,7 +15,7 @@ public class Niveau : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneDestination);
             }
-            if (SceneDestination == "level_Three" && playerInv.items.Contains(1))
+            if (SceneDestination == "level_Three" && playerInv.items.Contains(1) && playerInv.items.Contains(2) && playerInv.items.Contains(3))
             {
                 SceneManager.LoadScene(SceneDestination);
             }
