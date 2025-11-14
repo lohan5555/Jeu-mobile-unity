@@ -90,12 +90,26 @@ public class FireAttackManager : MonoBehaviour
         if (attack.effectPrefab != null)
         {
             GameObject go = Instantiate(attack.effectPrefab, spawn.position, spawn.rotation);
+            // --- AJOUT AUTOMATIQUE DU DAMAGE ZONE ---
+            if (go.GetComponent<DamageZone>() == null)
+            {
+                var dmg = go.AddComponent<DamageZone>();
+                dmg.damagePerTick = 5;      //  choisis tes dégâts
+                dmg.tickInterval = 0.5f;    // toutes les 0.5 sec
+            }
             Destroy(go, attack.duration);
         }
         else if (attack.vfxPrefab != null)
         {
             VisualEffect vfx = Instantiate(attack.vfxPrefab, spawn.position, spawn.rotation);
             vfx.Play();
+            // --- AJOUT AUTOMATIQUE DU DAMAGE ZONE ---
+            if (vfx.GetComponent<DamageZone>() == null)
+            {
+                var dmg = vfx.gameObject.AddComponent<DamageZone>();
+                dmg.damagePerTick = 5;      //  choisis tes dégâts
+                dmg.tickInterval = 0.5f;
+            }
             Destroy(vfx.gameObject, attack.duration);
         }
     }

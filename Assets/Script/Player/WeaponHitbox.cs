@@ -31,5 +31,12 @@ public class WeaponHitbox : MonoBehaviour
                 enemy.TakeDamage(1, transform.position);
             }
         }
+        if (other.CompareTag("Boss"))
+        {
+            Debug.Log("Touched BOSS!");
+            Boss boss = other.GetComponent<Boss>();
+            if (boss != null)
+                boss.TakeDamage(1);
+        }
     }
 }
