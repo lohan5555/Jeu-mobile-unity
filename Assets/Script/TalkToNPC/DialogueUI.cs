@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using System;
+
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -116,6 +118,20 @@ public class DialogueUI : MonoBehaviour
 
     private void EndDialogue()
     {
+        string scene_name = SceneManager.GetActiveScene().name;
+        var playerInventory = FindAnyObjectByType<PlayerInventory>();
+
+        if(scene_name == "level_One"){
+            playerInventory.AddFacts(1);
+            FindAnyObjectByType<factLoader>().RefreshUI();
+        }else if (scene_name == "level_Two"){
+            playerInventory.AddFacts(3);
+            FindAnyObjectByType<factLoader>().RefreshUI();
+        }else if (scene_name == "level_Three"){
+            playerInventory.AddFacts(5);
+            FindAnyObjectByType<factLoader>().RefreshUI();
+        }
+
         currentDialogue = null;
 
         // Cache tout
