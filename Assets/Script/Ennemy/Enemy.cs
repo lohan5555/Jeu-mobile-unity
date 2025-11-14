@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     public GameObject loot;
     public GameObject smokeEffect;
     public float despawnTime = 3f;
+    public int factId;
 
     void Start()
     {
@@ -119,6 +120,9 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
+            var playerInventory = player.GetComponent<PlayerInventory>();
+            playerInventory.AddFacts(factId);
+            FindAnyObjectByType<factLoader>().RefreshUI();
             Die();
         }
         else

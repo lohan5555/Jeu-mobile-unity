@@ -15,13 +15,13 @@ public class PlayerInventory: MonoBehaviour
     public void AddFacts(int factId)
     {
         facts.Add(factId);
-        Debug.Log("Objet " + factId + " ajouter à l'inventaire :" + string.Join(", ", facts));
+        Debug.Log("Objet " + factId + " ajouter au grimoire :" + string.Join(", ", facts));
     }
 
     public void clear()
     {
+        FindAnyObjectByType<factLoader>().RefreshUI();
         items.Clear();
-        facts.Clear();
     }
 
     public List<int> getFacts()
