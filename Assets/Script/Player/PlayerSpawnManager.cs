@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
@@ -15,22 +16,30 @@ public class PlayerSpawnManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        SpawnPoint spawn = FindAnyObjectByType<SpawnPoint>();
+        StartCoroutine(SpawnWhenReady());
+    }
 
-        if (spawn != null)
+    IEnumerator SpawnWhenReady()
+    {
+        PlayerInventory playerInv = null;
+        while (playerInv == null)
         {
-            var player = FindAnyObjectByType<PlayerInventory>()?.gameObject;
-
-            if (player != null)
-            {
-                Debug.Log("Joueur placer");
-                player.transform.position = spawn.transform.position;
-                transform.rotation = spawn.transform.rotation;
-            }
-            else
-            {
-                Debug.LogWarning($"Aucun joueur trouvé après le chargement de la scène {scene.name} !");
-            }
+            playerInv = FindAnyObjectByType<PlayerInventory>();
+            yield return null;
         }
+
+        GameObject player = playerInv.gameObject;
+
+        SpawnPoint spawn = null;
+        while (spawn == null)
+        {
+            spawn = FindAnyObjectByType<SpawnPoint>();
+            yield return null;
+        }
+
+        player.transform.position = spawn.transform.position;
+        player.transform.rotation = spawn.transform.rotation;
+
+        Debug.Log("[SpawnManager] Player correctement placé.");
     }
 }

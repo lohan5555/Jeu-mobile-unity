@@ -10,15 +10,14 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject mobileUI;
 
-    // Cache pour stocker les dialogues
+    // Cache pour stocker les dialogues et les dataMonster
     public Dictionary<string, DialogueData> dialoguesCache = new Dictionary<string, DialogueData>();
+    public Dictionary<string, string> jsonCache = new Dictionary<string, string>();
 
     [SerializeField] private string baseUrl = "https://billyboy16.github.io/unity-dialogues/";
-
-    // Bouton à afficher si pas de connexion / échec JSON
     [SerializeField] private GameObject RetryButton;
+    public bool dataReady = false; //quand le gameManager Ã  fini de charger les facts, on informe factLoader qu'il peut les rÃ©cupÃ©rer pour le grimoirUI
 
-    private bool isDownloading = false;
 
     void Awake()
     {
@@ -30,12 +29,61 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        StartCoroutine(LoadAllDialogues());
+        StartCoroutine(LoadEverything());
     }
 
-    IEnumerator LoadAllDialogues()
+    IEnumerator LoadEverything()
     {
-        Debug.Log("[GameManager] Téléchargement des dialogues depuis GitHub Pages...");
+        bool monsterOk = false;
+        yield return StartCoroutine(LoadAllMonsterData(result => monsterOk = result));
+
+        if (!monsterOk)
+            yield break;
+
+        bool dialoguesOk = false;
+        yield return StartCoroutine(LoadAllDialogues(result => dialoguesOk = result));
+
+        if (!dialoguesOk)
+            yield break;
+
+        SceneManager.LoadScene("level_One");
+        dataReady = true;
+    }
+
+
+
+    IEnumerator LoadAllMonsterData(System.Action<bool> callback)
+    {
+        Debug.Log("[GameManager] TÃ©lÃ©chargement de monsterData...");
+
+        string url = baseUrl + "monsterData.json";
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                jsonCache["monsterData.json"] = request.downloadHandler.text;
+                Debug.Log("[GameManager] monsterData chargÃ© !");
+                callback(true);
+                yield break;
+            }
+            else
+            {
+                Debug.LogError("[GameManager] ERREUR monsterData : " + request.error);
+                RetryButton?.SetActive(true);
+                callback(false);
+                yield break;
+            }
+        }
+    }
+
+
+
+    IEnumerator LoadAllDialogues(System.Action<bool> callback)
+    {
+        Debug.Log("[GameManager] TÃ©lÃ©chargement des dialogues...");
 
         string[] dialogueFiles = {
             "dialogue_1/dialogues_1.json",
@@ -45,60 +93,41 @@ public class GameManager : MonoBehaviour
             "dialogue_3/dialogues_1.json"
         };
 
-        bool success = true;
-
-        if (isDownloading)
-            yield break;
-
-        isDownloading = true;
-
         foreach (string file in dialogueFiles)
         {
             string url = baseUrl + file;
-            Debug.Log($"[GameManager] Téléchargement : {url}");
 
             using (UnityWebRequest request = UnityWebRequest.Get(url))
             {
                 yield return request.SendWebRequest();
 
-                if (request.result == UnityWebRequest.Result.Success)
+                if (request.result != UnityWebRequest.Result.Success)
                 {
-                    try
-                    {
-                        DialogueData data = JsonUtility.FromJson<DialogueData>(request.downloadHandler.text);
-                        dialoguesCache[file] = data;
-                        Debug.Log($"[GameManager] Dialogue chargé : {file}");
-                    }
-                    catch (System.Exception e)
-                    {
-                        Debug.LogError($"[GameManager] Erreur parsing JSON ({file}) : {e.Message}");
-                        success = false;
-                        break; // stop si erreur
-                    }
+                    Debug.LogError($"Erreur tÃ©lÃ©chargement : {file}");
+                    RetryButton?.SetActive(true);
+                    callback(false);
+                    yield break;
                 }
-                else
+
+                try
                 {
-                    Debug.LogError($"[GameManager] Erreur de téléchargement : {file} ({request.error})");
-                    success = false;
-                    break; // stop si échec téléchargement
+                    dialoguesCache[file] = JsonUtility.FromJson<DialogueData>(request.downloadHandler.text);
+                }
+                catch
+                {
+                    Debug.LogError($"Erreur parsing JSON : {file}");
+                    RetryButton?.SetActive(true);
+                    callback(false);
+                    yield break;
                 }
             }
         }
 
-        if (success)
-        {
-            Debug.Log("[GameManager] Tous les dialogues ont été chargés !");
-            SceneManager.LoadScene("level_One");
-        }
-        else
-        {
-            Debug.LogWarning("[GameManager] Impossible de charger les dialogues. Activation du bouton RetryButton.");
-            if (RetryButton != null)
-                RetryButton.gameObject.SetActive(true);
-        }
-
-        isDownloading = false;
+        Debug.Log("[GameManager] Tous les dialogues sont chargÃ©s !");
+        callback(true);
     }
+
+
 
     public void RegisterPlayer(GameObject p)
     {
@@ -117,7 +146,7 @@ public class GameManager : MonoBehaviour
         if (RetryButton != null)
             RetryButton.SetActive(false); // cache le bouton
 
-        StartCoroutine(LoadAllDialogues()); // relance le téléchargement
+        StartCoroutine(LoadEverything()); // relance le tÃ©lÃ©chargement
     }
 
 }

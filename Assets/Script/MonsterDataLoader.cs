@@ -1,17 +1,18 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class MonsterDataLoader
 {
     public static MonsterDataList LoadData(string fileName)
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>($"{fileName}");
-        if (jsonFile == null)
+        if (GameManager.Instance.jsonCache.TryGetValue(fileName, out string jsonText))
         {
-            Debug.LogError($"Impossible de charger {fileName}");
-            return null;
+            Debug.Log($"[MonsterDataLoader] JSON chargé depuis le cache : {fileName}");
+            return JsonUtility.FromJson<MonsterDataList>(jsonText);
         }
-        var result = JsonUtility.FromJson<MonsterDataList>(jsonFile.text);
-        return result;
+
+        Debug.LogError($"[MonsterDataLoader] JSON introuvable : {fileName}");
+        return null;
     }
 }
 

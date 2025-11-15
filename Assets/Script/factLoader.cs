@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 public class factLoader : MonoBehaviour
 {
@@ -11,12 +12,24 @@ public class factLoader : MonoBehaviour
     private MonsterEntry[] allMonsterData;
     private List<MonsterEntry> visibleFacts = new List<MonsterEntry>();
 
-    void Start()
+    IEnumerator Start()
     {
+        // Attendre que GameManager ait chargé les données
+        while (!GameManager.Instance.dataReady)
+            yield return null;
+
         var root = uiDocument.rootVisualElement;
         listView = root.Q<ListView>("monsterList");
 
-        allMonsterData = MonsterDataLoader.LoadData("monsterData").data;
+        MonsterDataList list = MonsterDataLoader.LoadData("monsterData.json");
+
+        if (list == null)
+        {
+            Debug.LogError("Impossible de charger MonsterData. Pas de connexion ?");
+            yield break;
+        }
+
+        allMonsterData = list.data;
 
         // Crée la vue d’un élément (le visuel d’une ligne)
         listView.makeItem = () =>
@@ -31,11 +44,12 @@ public class factLoader : MonoBehaviour
             (element as Label).text = visibleFacts[i].text;
         };
 
-        listView.fixedItemHeight = 40;
+        listView.fixedItemHeight = 60;
         listView.selectionType = SelectionType.None;
 
         RefreshUI();
     }
+
 
     public void RefreshUI()
     {

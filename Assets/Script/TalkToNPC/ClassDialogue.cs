@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [System.Serializable]
@@ -19,5 +20,10 @@ public class DialogueLine
 public class DialogueData
 {
     public DialogueLine[] npc_1;  // nom du NPC
+
+    public static implicit operator TextAsset(DialogueData v)
+    {
+        throw new NotImplementedException();
+    }
 }
 

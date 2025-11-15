@@ -2,31 +2,31 @@
   "data": [
     {
       "id": 0,
-      "text": "Vous êtes un jeune héros, aller voir le vieux sage pour savoir comment commencer votre parcours."
+      "text": "[Local] Vous êtes un jeune héros, aller voir le vieux sage pour savoir comment commencer votre parcours."
     },
     {
       "id": 1,
-      "text": "Les champignons vivent dans la forêt."
+      "text": "[Local] Les champignons vivent dans la forêt."
     },
     {
       "id": 2,
-      "text": "Méfiez-vous, les champignons attaquent différemment quand ils sont en danger ! Ne sous-estimez jamais un champignon aux portes de la mort."
+      "text": "[Local] Méfiez-vous, les champignons attaquent différemment quand ils sont en danger ! Ne sous-estimez jamais un champignon aux portes de la mort."
     },
     {
       "id": 3,
-      "text": "Les cactus vivent en groupe dans les canyons désertique."
+      "text": "[Local] Les cactus vivent en groupe dans les canyons désertique."
     },
     {
       "id": 4,
-      "text": "Les cactus savent utiliser leur environnement pour se cacher et prendre leurs victimes par surprise !"
+      "text": "[Local] Les cactus savent utiliser leur environnement pour se cacher et prendre leurs victimes par surprise !"
     },
     {
       "id": 5,
-      "text": "Ne fait confiance à personne !"
+      "text": "[Local] Ne fait confiance à personne !"
     },
     {
       "id": 6,
-      "text": "Félicitation, jeune héros, ta quête contre les forces du mal peux enfin commencer"
+      "text": "[Local] Félicitation, jeune héros, ta quête contre les forces du mal peux enfin commencer"
     }
     
   ]
