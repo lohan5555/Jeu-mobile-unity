@@ -24,13 +24,12 @@ public class AnimatorFixer : MonoBehaviour
 
     private IEnumerator FixAnimator()
     {
-        // attendre 1-2 frames pour laisser Unity initialiser la scène
+        // attendre 1-2 frames pour laisser Unity initialiser la scï¿½ne
         yield return null;
         yield return null;
 
         if (animator != null)
         {
-            Debug.Log("Réinitialisation de l'Animator après changement de scène");
             animator.enabled = false;
             yield return null;
             animator.enabled = true;
