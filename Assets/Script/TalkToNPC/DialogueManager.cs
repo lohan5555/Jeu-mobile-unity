@@ -47,7 +47,6 @@ public class DialogueManager : MonoBehaviour
         if (GameManager.Instance.dialoguesCache.TryGetValue(jsonKey, out var data))
         {
             dialogues = data;
-            Debug.Log($"[DialogueManager] Dialogue chargé depuis le cache : {jsonKey}");
         }
         else
         {

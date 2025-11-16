@@ -54,8 +54,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadAllMonsterData(System.Action<bool> callback)
     {
-        Debug.Log("[GameManager] Téléchargement de monsterData...");
-
         string url = baseUrl + "monsterData.json";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
@@ -65,7 +63,6 @@ public class GameManager : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 jsonCache["monsterData.json"] = request.downloadHandler.text;
-                Debug.Log("[GameManager] monsterData chargé !");
                 callback(true);
                 yield break;
             }
@@ -83,8 +80,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadAllDialogues(System.Action<bool> callback)
     {
-        Debug.Log("[GameManager] Téléchargement des dialogues...");
-
         string[] dialogueFiles = {
             "dialogue_1/dialogues_1.json",
             "dialogue_1/dialogues_2.json",

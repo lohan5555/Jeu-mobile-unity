@@ -7,7 +7,6 @@ public static class MonsterDataLoader
     {
         if (GameManager.Instance.jsonCache.TryGetValue(fileName, out string jsonText))
         {
-            Debug.Log($"[MonsterDataLoader] JSON chargé depuis le cache : {fileName}");
             return JsonUtility.FromJson<MonsterDataList>(jsonText);
         }
 

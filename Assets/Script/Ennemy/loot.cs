@@ -7,8 +7,6 @@ public class loot : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Item n°" + id + " touché par " + other + "!");
-
             PlayerInventory inventory = other.GetComponent<PlayerInventory>();
             if (inventory != null)
             {

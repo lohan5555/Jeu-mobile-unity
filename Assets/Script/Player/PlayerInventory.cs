@@ -9,13 +9,11 @@ public class PlayerInventory: MonoBehaviour
     public void AddItem(int itemId)
     {
         items.Add(itemId);
-        Debug.Log("Objet " + itemId + " ajouter à l'inventaire :" + string.Join(", ", items));
     }
 
     public void AddFacts(int factId)
     {
         facts.Add(factId);
-        Debug.Log("Objet " + factId + " ajouter au grimoire :" + string.Join(", ", facts));
     }
 
     public void clear()

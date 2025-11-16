@@ -96,7 +96,6 @@ public class DialogueUI : MonoBehaviour
         if (currentDialogue != null && currentIndex < currentDialogue.Length)
         {
             dialogueLabel.text = currentDialogue[currentIndex].text;
-            Debug.Log($"[DialogueUI] Ligne {currentIndex} : '{currentDialogue[currentIndex].text}'");
         }
         else
         {
@@ -138,7 +137,6 @@ public class DialogueUI : MonoBehaviour
         dialogueBox.style.display = DisplayStyle.None;
         dialogueLabel.style.display = DisplayStyle.None;
 
-        Debug.Log("[DialogueUI] Dialogue termine et background + label caches");
 
         // Lancer le combat si on est sur la scène leve_Three
         if (SceneManager.GetActiveScene().name == "level_Three")
@@ -147,7 +145,6 @@ public class DialogueUI : MonoBehaviour
             if (fireManager != null)
             {
                 fireManager.StartFireCombat();
-                Debug.Log("[DialogueUI] Combat lancé automatiquement !");
             }
             else
             {

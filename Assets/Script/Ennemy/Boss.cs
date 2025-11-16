@@ -8,15 +8,15 @@ public class Boss : MonoBehaviour
     private int currentHealth;
 
     [Header("Loot & Effets")]
-    public GameObject lootPrefab;        // L'objet à drop
-    public GameObject deathEffectPrefab; // Fumée
-    public float despawnDelay = 0.2f;    // Petit délai (ou 0)
+    public GameObject lootPrefab;        // L'objet ï¿½ drop
+    public GameObject deathEffectPrefab; // Fumï¿½e
+    public float despawnDelay = 0.2f;
 
     [Header("Fire Attack Manager")]
-    public FireAttackManager fireAttackManager; // assigner depuis l'inspecteur
+    public FireAttackManager fireAttackManager;
 
     [Header("Playerdetector")]
-    public GameObject playerdetector; // assigner depuis l'inspecteur
+    public GameObject playerdetector;
 
     public Transform player;
 
@@ -27,7 +27,6 @@ public class Boss : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        Debug.Log("[Boss] Max Boss HP : " + maxHealth);
 
         if (player == null) //si on ne le trouve pas on le cherche
         {
@@ -43,7 +42,6 @@ public class Boss : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= amount;
-        Debug.Log("[Boss] Boss HP : " + currentHealth + "/" + maxHealth);
 
         if (currentHealth <= 0)
             Die();
@@ -54,7 +52,6 @@ public class Boss : MonoBehaviour
         if (isDead) return;
 
         isDead = true;
-        Debug.Log("[Boss] Boss mort !");
         BossUI.Instance.HideBossBar();
 
 
@@ -65,7 +62,7 @@ public class Boss : MonoBehaviour
             fireAttackManager.StopFireCombat();
         }
 
-        // Effet visuel de fumée
+        // Effet visuel de fumï¿½e
         if (deathEffectPrefab != null)
             Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
 
@@ -73,7 +70,7 @@ public class Boss : MonoBehaviour
         if (lootPrefab != null)
             Instantiate(lootPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
 
-        // Destruction du boss après un léger délai
+        // Destruction du boss aprï¿½s un lï¿½ger dï¿½lai
         Destroy(gameObject, despawnDelay);
         Destroy(playerdetector, despawnDelay);
 

@@ -11,17 +11,17 @@ public class FireAttackType
     public string attackName;
 
     [Header("Type d'effet (un seul des deux)")]
-    public GameObject effectPrefab;       // Ex: boule de feu (GameObject)
-    public VisualEffect vfxPrefab;        // Ex: tornade, météorites, zone de feu
+    public GameObject effectPrefab;
+    public VisualEffect vfxPrefab;
 
-    [Header("Paramètres de l'attaque")]
+    [Header("Paramï¿½tres de l'attaque")]
     [Range(0f, 1f)] public float spawnProbability = 0.25f;
     public float duration = 3f;
 
     [Header("Points de spawn")]
     public List<Transform> spawnPoints = new List<Transform>(); // plusieurs positions possibles
 
-    [Header("Multiplicité")]
+    [Header("Multiplicitï¿½")]
     public int simultaneousSpawns = 1; // combien d'effets de ce type par attaque
 }
 
@@ -29,8 +29,8 @@ public class FireAttackManager : MonoBehaviour
 {
 
     [Header("Audio Settings")]
-    public AudioSource audioSource;     // référence à l'AudioSource
-    public AudioClip combatMusic;       // clip à jouer
+    public AudioSource audioSource;     // rï¿½fï¿½rence ï¿½ l'AudioSource
+    public AudioClip combatMusic;       // clip ï¿½ jouer
 
     [Header("Fire Attack Settings")]
     public FireAttackType fireball;       // effet projectile
@@ -49,8 +49,8 @@ public class FireAttackManager : MonoBehaviour
     private VisualElement talkVE;   
     void Awake()
     {
-        // Récupération du UIDocument et de ButtonTalk
-        UIDocument doc = FindObjectOfType<UIDocument>();
+        // Rï¿½cupï¿½ration du UIDocument et de ButtonTalk
+        UIDocument doc = FindFirstObjectByType<UIDocument>();
         if (doc != null)
         {
             var root = doc.rootVisualElement;
@@ -95,7 +95,7 @@ public class FireAttackManager : MonoBehaviour
     {
         if (attack.spawnPoints.Count == 0)
         {
-            Debug.LogWarning($"Aucun spawn point défini pour l'attaque {attack.attackName}");
+            Debug.LogWarning($"Aucun spawn point dï¿½fini pour l'attaque {attack.attackName}");
             return;
         }
 
@@ -105,12 +105,11 @@ public class FireAttackManager : MonoBehaviour
         if (attack.effectPrefab != null)
         {
             GameObject go = Instantiate(attack.effectPrefab, spawn.position, spawn.rotation);
-            // --- AJOUT AUTOMATIQUE DU DAMAGE ZONE ---
             if (go.GetComponent<DamageZone>() == null)
             {
                 var dmg = go.AddComponent<DamageZone>();
-                dmg.damagePerTick = 5;      //  choisis tes dégâts
-                dmg.tickInterval = 0.5f;    // toutes les 0.5 sec
+                dmg.damagePerTick = 5;
+                dmg.tickInterval = 0.5f;
             }
             Destroy(go, attack.duration);
         }
@@ -118,11 +117,10 @@ public class FireAttackManager : MonoBehaviour
         {
             VisualEffect vfx = Instantiate(attack.vfxPrefab, spawn.position, spawn.rotation);
             vfx.Play();
-            // --- AJOUT AUTOMATIQUE DU DAMAGE ZONE ---
             if (vfx.GetComponent<DamageZone>() == null)
             {
                 var dmg = vfx.gameObject.AddComponent<DamageZone>();
-                dmg.damagePerTick = 5;      //  choisis tes dégâts
+                dmg.damagePerTick = 5;
                 dmg.tickInterval = 0.5f;
             }
             Destroy(vfx.gameObject, attack.duration);
@@ -149,7 +147,7 @@ public class FireAttackManager : MonoBehaviour
     {
         if (fireZone.spawnPoints.Count == 0)
         {
-            Debug.LogWarning("Aucun spawn point défini pour la zone de feu !");
+            Debug.LogWarning("Aucun spawn point dï¿½fini pour la zone de feu !");
             return;
         }
 

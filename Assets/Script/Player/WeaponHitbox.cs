@@ -24,7 +24,6 @@ public class WeaponHitbox : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("Touched enemy!");
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
@@ -33,7 +32,6 @@ public class WeaponHitbox : MonoBehaviour
         }
         if (other.CompareTag("Boss"))
         {
-            Debug.Log("Touched BOSS!");
             Boss boss = other.GetComponent<Boss>();
             if (boss != null)
                 boss.TakeDamage(1);

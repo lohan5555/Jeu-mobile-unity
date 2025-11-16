@@ -88,13 +88,11 @@ public class PauseMenuUI : MonoBehaviour
 
     private void OnGrimoireClicked()
     {
-        Debug.Log("affichage du grimoire");
         grimoirePanel.style.display = DisplayStyle.Flex;
     }
 
     private void OnButtonRetourGrimoireClicked()
     {
-        Debug.Log("fermeture du grimoire");
         grimoirePanel.style.display = DisplayStyle.None;
     }
 }

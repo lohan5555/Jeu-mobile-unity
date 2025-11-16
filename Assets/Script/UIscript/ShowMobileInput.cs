@@ -5,11 +5,11 @@ public class ShowMobileInput : MonoBehaviour
 {
     void Start()
     {
-        // Cherche le premier UIDocument actif dans la scène
+        // Cherche le premier UIDocument actif dans la scï¿½ne
         UIDocument doc = Object.FindFirstObjectByType<UIDocument>();
         if (doc == null)
         {
-            Debug.LogError("[ShowMobileInput] Aucun UIDocument trouvé dans la scène !");
+            Debug.LogError("[ShowMobileInput] Aucun UIDocument trouvï¿½ dans la scï¿½ne !");
             return;
         }
 
@@ -19,22 +19,20 @@ public class ShowMobileInput : MonoBehaviour
         if (mobileInput != null)
         {
             mobileInput.style.display = DisplayStyle.Flex;
-            Debug.Log("[ShowMobileInput] #MobileInput affiché !");
         }
         else
         {
-            Debug.LogWarning("[ShowMobileInput] Élément #MobileInput introuvable !");
+            Debug.LogWarning("[ShowMobileInput] ï¿½lï¿½ment #MobileInput introuvable !");
         }
 
         var bossHealthBar = root.Q<VisualElement>("BossHealthBarContainer");
         if (bossHealthBar != null)
         {
             bossHealthBar.style.display = DisplayStyle.None;
-            Debug.Log("[ShowMobileInput] BossHealthBarContainer cachée !");
         }
         else
         {
-            Debug.Log("[ShowMobileInput] BossHealthBarContainer introuvable (nom incorrect ?)");
+            Debug.LogWarning("[ShowMobileInput] BossHealthBarContainer introuvable (nom incorrect ?)");
         }
     }
 }

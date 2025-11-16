@@ -61,7 +61,6 @@ public class PlayerCombat : MonoBehaviour
 
         comboStep++;
         lastAttackTime = Time.time;
-        Debug.Log("Combot Step : " + comboStep);
 
         if (comboStep == 1)
         {
@@ -86,18 +85,15 @@ public class PlayerCombat : MonoBehaviour
         if (isInvulnerable) return;
 
         health -= damage;
-        Debug.Log("Enemy took damage, health = " + health);
         HealthSystem.Instance.TakeDamage(damage);
 
         if (health <= 0)
         {
-            Debug.Log("Player Die");
             animator.SetTrigger("Die");
             StartCoroutine(RespawnCooldown());
         }
         else
         {
-            Debug.Log("Player Hit");
             animator.SetTrigger("Hit");
         }
 

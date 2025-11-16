@@ -106,7 +106,6 @@ public class Enemy : MonoBehaviour
 
     public void AttackPlayer(string attack)
     {
-        Debug.Log("Animation d'attaque : " + attack);
         StartCoroutine(WaitAttackCooldown());
         animator.SetTrigger(attack);
     }
@@ -116,7 +115,6 @@ public class Enemy : MonoBehaviour
         if (isInvulnerable) return;
 
         health -= damage;
-        Debug.Log("Enemy took damage, health = " + health);
 
         if (health <= 0)
         {

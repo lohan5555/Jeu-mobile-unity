@@ -19,7 +19,6 @@ public class EnemyHitbox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Touched " + other);
             PlayerCombat player = other.GetComponent<PlayerCombat>();
             if (player != null)
             {

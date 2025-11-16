@@ -39,7 +39,5 @@ public class PlayerSpawnManager : MonoBehaviour
 
         player.transform.position = spawn.transform.position;
         player.transform.rotation = spawn.transform.rotation;
-
-        Debug.Log("[SpawnManager] Player correctement placé.");
     }
 }

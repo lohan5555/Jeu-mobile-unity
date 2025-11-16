@@ -7,13 +7,13 @@ public class MusicManager : MonoBehaviour
 
     private AudioSource audioSource;
 
-    [Header("Musique par scène")]
+    [Header("Musique par scï¿½ne")]
     public AudioClip menuMusic;
     public AudioClip level1Music;
     public AudioClip level2Music;
     public AudioClip level3Music;
 
-    [Header("Musique spéciale")]
+    [Header("Musique spï¿½ciale")]
     public AudioClip bossMusic;
 
     private Coroutine fadeCoroutine;
@@ -24,24 +24,20 @@ public class MusicManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("[MusicManager] Instance créée et persistante.");
         }
         else
         {
-            Debug.Log("[MusicManager] Instance déjà existante : suppression de ce GameObject.");
             Destroy(gameObject);
             return;
         }
 
         audioSource = GetComponent<AudioSource>();
-        Debug.Log("[MusicManager] AudioSource trouvé : " + (audioSource != null));
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("[MusicManager] Nouvelle scène chargée : " + scene.name);
         PlayMusicForScene(scene.name);
     }
 
@@ -56,12 +52,11 @@ public class MusicManager : MonoBehaviour
             case "level_One": clip = level1Music; break;
             case "level_Two": clip = level2Music; break;
             case "level_Three": clip = level3Music; break;
-            default: Debug.LogWarning("[MusicManager] Aucune musique définie pour cette scène."); break;
+            default: Debug.LogWarning("[MusicManager] Aucune musique dï¿½finie pour cette scï¿½ne."); break;
         }
 
         if (clip != null)
         {
-            Debug.Log("[MusicManager] Démarrage du fade vers : " + clip.name);
             if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
             fadeCoroutine = StartCoroutine(FadeToMusic(clip));
         }
@@ -71,19 +66,17 @@ public class MusicManager : MonoBehaviour
     {
         if (bossMusic == null)
         {
-            Debug.LogWarning("[MusicManager] BossMusic non assignée !");
+            Debug.LogWarning("[MusicManager] BossMusic non assignï¿½e !");
             return;
         }
 
-        Debug.Log("[MusicManager] Lancement musique Boss : " + bossMusic.name);
         if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
         fadeCoroutine = StartCoroutine(FadeToMusic(bossMusic));
     }
 
     public void StopBossMusicAndResumeLevel()
     {
-        Debug.Log("[MusicManager] Fin combat Boss, reprise musique normale");
-        // On récupère la scène actuelle et on relance la musique de niveau
+        // On rï¿½cupï¿½re la scï¿½ne actuelle et on relance la musique de niveau
         PlayMusicForScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
@@ -112,7 +105,5 @@ public class MusicManager : MonoBehaviour
             audioSource.volume = Mathf.Lerp(0f, startVolume, t / fadeTime);
             yield return null;
         }
-
-        Debug.Log("[MusicManager] Musique jouée : " + newClip.name);
     }
 }
